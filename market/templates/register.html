@@ -4,10 +4,9 @@
 {% endblock %}
 {% block content %}
     <body class="text-center">
-        <div class="container">
+        <div class="container" style="margin-top: 2rem;">
             <form method="POST" class="form-register" style="color:white">
                 {{ form.hidden_tag() }}
-                <img class="mb-4" src="https://i.ibb.co/Yt6mZn0/register.jpg" alt="register here">
                 <h1 class="h3 mb-3 font-weight-normal">
                     Please Create Your Account
                 </h1>
@@ -24,6 +23,10 @@
                 {{ form.password2.label() }}
                 {{ form.password2(class="form-control", placeholder="Confirm Password")}}
                 <br>
+                <div class="checkbox mb-3">
+                    <h6>Already have an account?</h6>
+                    <a class="btn btn-sm btn-secondary" href="{{ url_for('login_page') }}">Login</a>    
+                </div>
                 {{ form.submit(class="btn btn-lg btn-primary btn-block")}}
             </form>
         </div>

@@ -30,19 +30,6 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    def validate_username(self, username_to_check):
-        user = User.query.filter_by(username=username_to_check.data).first()
-        if user is None:
-            raise ValidationError('Username does not exist! Please Register')
-
-    def validate_password(self, username_to_check, password_to_check):
-        result = User.query_filter_by(
-            username=username_to_check.data, password=password_to_check.data).first()
-        if result is None:
-            raise ValidationError(
-                'Username or Password is incorrect! Please try again')
-
-    username = StringField(
-        label='User Name:', validators=[DataRequired()])
+    username = StringField(label='User Name:', validators=[DataRequired()])
     password = PasswordField(label='Password:', validators=[DataRequired()])
-    submit = SubmitField(label='Login')
+    submit = SubmitField(label='Sign in')
