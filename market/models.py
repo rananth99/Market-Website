@@ -43,6 +43,9 @@ class User(db.Model, UserMixin):
     def can_purchase(self, item_obj):
         return self.budget >= item_obj.price
 
+    def can_sell(self, item_obj):
+        return item_obj in self.items
+
 
 class Item(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -51,7 +54,7 @@ class Item(db.Model):
     description = db.Column(db.String(length=1200),
                             nullable=False, unique=True)
     barcode = db.Column(db.String(length=12), nullable=False, unique=True)
-    owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return f'Item {self.name}'
@@ -59,4 +62,9 @@ class Item(db.Model):
     def buy(self, user):
         self.owner = user.id
         user.budget -= self.price
+        db.session.commit()
+
+    def sell(self, user):
+        self.owner = None
+        user.budget += self.price
         db.session.commit()
